@@ -3,7 +3,7 @@
 - The average name (2019) is `Aani San`. 
 - With the `-l` option it's `Aaniennneeret Sannenaeiairrezeiais`.
 - Using the smoothing option (`-s`), the average name is `Aaaiie Saaaenn`
-- Using smoothing with true mean (`-s -a`), the average name is `Ijijkjj Kkjkkk`.
+- Using smoothing with true mean (`-s -a`), the average name is `Jijkjj Kkjkkkl`.
 
 This script computes the average name of current Rice undergrads (taken from `search.rice.edu`). It defines the average name as the name comprised of the most common letter for each position in the name. So really it's more of a "mode" sort of calculation. 
 
