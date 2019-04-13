@@ -1,6 +1,7 @@
 import re
 import urllib3
 import operator
+import sys
 
 # Returns (first, last) tuple of strings
 def cleanName(raw):
@@ -31,7 +32,7 @@ def searchForCollege(college):
 
     return all
 
-def computeAverage(names, longest):
+def computeAverage(names, longest, useLongName):
     average = [{} for _ in range(longest)]
     alphabet = "abcdefghijklmnopqrstuvwxyz " # The space at the end is important
 
@@ -44,8 +45,9 @@ def computeAverage(names, longest):
     for name in names:
         for idx, char in enumerate(name):
             average[idx][char] += 1
-       for i in range(len(name), longest):
-           average[i][" "] += 1
+        if not useLongName:
+            for i in range(len(name), longest):
+                average[i][" "] += 1
         
         
     mostFreq = [sorted(x.items(), key=operator.itemgetter(1)) for x in average]        
@@ -55,7 +57,7 @@ def computeAverage(names, longest):
     
 
 
-def run():
+def run(useLongName):
     allColleges = ["will+rice", "baker", "lovett", "sid", "hanszen", "wiess", "mcmurtry", "duncan", "brown", "jones", "martel"]
 
     allNames = []
@@ -65,9 +67,14 @@ def run():
     longestFirst = max([len(x[0]) for x in allNames])
     longestLast = max([len(x[1]) for x in allNames])
 
-    averageFirst = computeAverage([x[0] for x in allNames], longestFirst)
-    averageLast = computeAverage([x[1] for x in allNames], longestLast)
+    averageFirst = computeAverage([x[0] for x in allNames], longestFirst, useLongName)
+    averageLast = computeAverage([x[1] for x in allNames], longestLast, useLongName)
 
     print("It's {} {}".format(averageFirst, averageLast))
 
-run()
+
+if len(sys.argv) == 1:
+    run(False)
+else:
+    if sys.argv[1] == "-l":
+        run(True)
