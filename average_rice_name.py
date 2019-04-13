@@ -1,31 +1,6 @@
-import os
 import re
 import urllib3
 import operator
-
-def generateAllNetids():
-    all = []
-    alphabet = "abcdefghijklmnopqrstuvwxyz"
-    
-    # Generate letter netids
-    for i in alphabet:
-        for j in alphabet:
-            all.append(i + j)
-
-    for i in alphabet:
-        for j in alphabet:
-            for k in alphabet:
-                all.append(i + j + k)
-
-    return all
-
-def sendOneQuery(netid):
-    res = os.popen("finger {}@rice.edu".format(netid)).read()
-    matchObj = re.search(r'name:.*\n', res)
-    if matchObj:
-        return cleanName(matchObj.group())
-    else:
-        return None
 
 # Returns (first, last) tuple of strings
 def cleanName(raw):
@@ -58,7 +33,7 @@ def searchForCollege(college):
 
 def computeAverage(names, longest):
     average = [{} for _ in range(longest)]
-    alphabet = "abcdefghijklmnopqrstuvwxyz "
+    alphabet = "abcdefghijklmnopqrstuvwxyz " # The space at the end is important
 
     # Initialize the dict
     for d in average:
@@ -69,8 +44,8 @@ def computeAverage(names, longest):
     for name in names:
         for idx, char in enumerate(name):
             average[idx][char] += 1
-       # for i in range(len(name), longest):
-       #     average[i][" "] += 1
+       for i in range(len(name), longest):
+           average[i][" "] += 1
         
         
     mostFreq = [sorted(x.items(), key=operator.itemgetter(1)) for x in average]        
